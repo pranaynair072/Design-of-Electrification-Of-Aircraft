@@ -1,0 +1,43 @@
+% MATLAB Script: Battery Cycle with Respect to Time for Pipistrel Alpha Electro by Pranay Nair, Pranav Nagrale and Mayur Kukreja
+
+clear all;
+close all;
+clc;
+
+% Aircraft Parameters
+battery_capacity = 21;       % kWh, total battery capacity
+efficiency = 0.9;           % Propulsion efficiency
+simulation_time = 1.5;      % hours, max flight time (1 hour + 30-minute reserve)
+reserve_time = 0.5;         % hours (30 minutes)
+
+% Adjust power to match 1-hour endurance + 30-minute reserve
+usable_fraction = 1 - reserve_time / simulation_time; % 0.6667
+usable_energy = battery_capacity * usable_fraction;   % 14 kWh
+power_cruise = usable_energy * efficiency;           % 14 kWh in 1 hour → 12.6 kW
+
+% Time Vector
+time_step = 0.01;           % hours, simulation time step
+time = 0:time_step:simulation_time; % hours, time vector from 0 to 1.5
+
+% Simulate Battery Discharge
+battery_soc = zeros(size(time)); % State of Charge (SoC) in kWh
+battery_soc(1) = battery_capacity; % Initial SoC = 21 kWh
+
+% Power consumption adjusted for efficiency
+power_draw = power_cruise / efficiency; % kW (14 kW)
+
+for i = 2:length(time)
+    energy_used = power_draw * time_step; % kWh
+    battery_soc(i) = battery_soc(i-1) - energy_used;
+    if battery_soc(i) < 0
+        battery_soc(i) = 0; % Prevent negative SoC
+    end
+end
+
+% Plot Battery Cycle
+figure;
+plot(time, battery_soc, 'b-', 'LineWidth', 2);
+xlabel('Time (hours)');
+ylabel('Battery State of Charge (kWh)');
+title('Battery Cycle with Respect to Time for Pipistrel Alpha Electro');
+grid on;
