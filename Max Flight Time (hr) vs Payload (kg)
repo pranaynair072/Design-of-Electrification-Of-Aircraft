@@ -1,0 +1,44 @@
+% MATLAB Script: Max Flight Time (hr) vs Payload (kg) for Pipistrel Alpha Electro by Pranay Nair, Pranav Nagrale and Mayur Kukreja
+
+clear all;
+close all;
+clc;
+
+% Aircraft Parameters
+battery_capacity = 21;       % kWh, total battery capacity
+efficiency = 0.9;           % Propulsion efficiency
+reserve_time = 0.5;         % hours (30 minutes)
+simulation_time = 1.5;      % hours (1 hour + 30-minute reserve)
+empty_weight = 403;         % kg
+mtow = 550;                 % kg
+max_payload = mtow - empty_weight; % 147 kg
+
+% Usable Energy
+usable_fraction = 1 - reserve_time / simulation_time; % 0.6667
+usable_energy = battery_capacity * usable_fraction;   % 14 kWh
+
+% Power Consumption Parameters
+power_cruise_base = 12.6;   % kW, base power at empty weight (403 kg)
+power_cruise_max = power_cruise_base * (mtow / empty_weight); % ~17.2 kW at 550 kg
+payload_factor = (power_cruise_max - power_cruise_base) / max_payload; % ~0.0316 kW/kg
+
+% Payload Sweep
+payload = 0:1:max_payload;  % kg, sweep from 0 to 147 kg in 1 kg steps
+
+% Calculate Max Flight Time
+flight_time = zeros(size(payload));
+for i = 1:length(payload)
+    total_weight = empty_weight + payload(i); % kg
+    power_cruise = power_cruise_base + (payload_factor * payload(i)); % kW
+    power_draw = power_cruise / efficiency; % kW, adjusted for efficiency
+    flight_time(i) = usable_energy / power_draw; % hours
+end
+
+% Plot Max Flight Time vs Payload
+figure;
+plot(payload, flight_time, 'g-', 'LineWidth', 2);
+xlabel('Payload (kg)');
+ylabel('Max Flight Time (hr)');
+title('Max Flight Time vs Payload for Pipistrel Alpha Electro');
+grid on;
+ylim([0 max(flight_time) * 1.1]); % Set y-axis limit to start at 0
