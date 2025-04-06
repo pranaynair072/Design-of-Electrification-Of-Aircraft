@@ -1,2 +1,56 @@
-# MATLAB_Alpha-Electro
-Generating efficiency of an Electric aircraft powered by MATLAB coding input and graphical output.
+% MATLAB Project: Pipistrel Alpha Electro Performance Analysis by Pranay Nair, Pranav Nagrale and Mayur Kukreja
+
+clear all;
+close all;
+clc;
+
+% Constants and Aircraft Parameters
+battery_capacity = 21;          % kWh, total battery capacity
+empty_weight = 403;            % kg, including batteries
+mtow = 550;                    % kg, maximum takeoff weight
+max_payload = mtow - empty_weight;  % kg, 147 kg
+power_cruise = 50;             % kW, cruise power consumption
+cruise_speed = 157;            % km/h
+efficiency = 0.9;              % Propulsion efficiency (assumed)
+specific_energy = 0.18;        % kWh/kg, typical for Li-ion batteries
+reserve_time = 0.5;            % hours, 30-minute reserve
+
+% Payload Range (0 to max_payload)
+payload = 0:10:max_payload;    % kg, payload sweep from 0 to 147 kg
+
+% Step 1: Battery Cycle with Respect to Time
+time_step = 0.01;              % hours, simulation time step
+max_time = 1.5;                % hours, max flight time with reserve
+time = 0:time_step:max_time;   % Time vector
+battery_soc = zeros(size(time)); % State of Charge (SoC) in kWh
+battery_soc(1) = battery_capacity; % Initial SoC
+
+for i = 2:length(time)
+    energy_used = power_cruise * time_step / efficiency; % kWh per step
+    battery_soc(i) = battery_soc(i-1) - energy_used;
+    if battery_soc(i) < 0
+        battery_soc(i) = 0;    % Battery fully discharged
+    end
+end
+
+% Step 2: Range vs Payload
+range_km = zeros(size(payload));
+for i = 1:length(payload)
+    total_weight = empty_weight + payload(i); % kg
+    % Assume range proportional to available energy and inversely to weight
+    usable_energy = battery_capacity * (1 - reserve_time/max_time); % kWh
+    range_km(i) = (usable_energy * cruise_speed * efficiency) / (total_weight / 1000); % km
+end
+
+% Step 3: Max Flight Time vs Payload
+max_flight_time = zeros(size(payload));
+for i = 1:length(payload)
+    total_weight = empty_weight + payload(i); % kg
+    % Flight time = usable energy / power consumption
+    usable_energy = battery_capacity * (1 - reserve_time/max_time); % kWh
+    max_flight_time(i) = usable_energy * efficiency / power_cruise; % hours
+end
+
+% Step 4: Battery Capacity vs Payload
+% Assuming battery capacity remains constant unless scaled with payload
+battery_capacity_vs_payload = ones(size(payload)) * battery_capacity; % kWh
