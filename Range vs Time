@@ -1,0 +1,47 @@
+% MATLAB Script: Range vs Time for Pipistrel Alpha Electro by Pranay Nair, Pranav Nagrale and Mayur Kukreja
+
+clear all;
+close all;
+clc;
+
+% Aircraft Parameters
+battery_capacity = 21;       % kWh, total battery capacity
+efficiency = 0.9;           % Propulsion efficiency
+reserve_time = 0.5;         % hours (30 minutes)
+simulation_time = 1.5;      % hours (1 hour + 30-minute reserve)
+cruise_speed = 157;         % km/h
+power_cruise = 12.6;        % kW, base power at empty weight
+power_draw = power_cruise / efficiency; % kW, adjusted for efficiency (~14 kW)
+
+% Usable Energy
+usable_fraction = 1 - reserve_time / simulation_time; % 0.6667
+usable_energy = battery_capacity * usable_fraction;   % 14 kWh
+
+% Time Vector
+time_step = 0.01;           % hours, simulation time step
+time = 0:time_step:simulation_time; % hours, time vector from 0 to 1.5
+
+% Calculate Range
+range_km = zeros(size(time));
+for i = 1:length(time)
+    % Energy used up to this time
+    energy_used = power_draw * time(i); % kWh
+    if energy_used <= battery_capacity % Ensure we don't exceed total capacity
+        % Raw range based on cruise speed and time
+        raw_range = cruise_speed * time(i); % km
+        % Scale range to match Pipistrel's 95-150 km (adjust to ~150 km at 1 hour)
+        scaling_factor = 150 / (cruise_speed * 1); % ~0.9554 (to cap at 150 km at 1 hour)
+        range_km(i) = raw_range * scaling_factor;
+    else
+        range_km(i) = 0; % Range becomes 0 after battery depletion
+    end
+end
+
+% Plot Range vs Time
+figure;
+plot(time, range_km, 'c-', 'LineWidth', 2);
+xlabel('Time (hours)');
+ylabel('Range (km)');
+title('Range vs Time for Pipistrel Alpha Electro');
+grid on;
+ylim([0 max(range_km) * 1.1]); % Set y-axis limit to start at 0
