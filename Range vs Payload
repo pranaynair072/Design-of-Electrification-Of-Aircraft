@@ -1,0 +1,41 @@
+% MATLAB Script: Range vs Payload for Pipistrel Alpha Electro by Pranay Nair, Pranav Nagrale and Mayur Kukreja
+
+clear all;
+close all;
+clc;
+
+% Aircraft Parameters
+battery_capacity = 21;       % kWh
+empty_weight = 403;         % kg
+mtow = 550;                 % kg
+max_payload = mtow - empty_weight; % 147 kg
+cruise_speed = 157;         % km/h
+efficiency = 0.9;           % Propulsion efficiency
+reserve_time = 0.5;         % hours (30 minutes)
+simulation_time = 1.5;      % hours (1 hour + 30-minute reserve)
+
+% Payload Sweep
+payload = 0:1:max_payload;  % kg, sweep from 0 to 147 kg in 1 kg steps
+
+% Calculate Usable Energy
+usable_fraction = 1 - reserve_time / simulation_time; % 0.6667
+usable_energy = battery_capacity * usable_fraction;   % ~14 kWh
+
+% Calculate Range for Each Payload
+range_km = zeros(size(payload));
+for i = 1:length(payload)
+    total_weight = empty_weight + payload(i); % kg
+    % Range = (Usable Energy × Cruise Speed × Efficiency) / (Total Weight / 1000)
+    raw_range = (usable_energy * cruise_speed * efficiency) / (total_weight / 1000); % km
+    % Apply scaling factor to match Pipistrel's 95-150 km range
+    scaling_factor = 0.03; % Tuned to get ~150 km at 0 kg payload
+    range_km(i) = raw_range * scaling_factor;
+end
+
+% Plot Range vs Payload
+figure;
+plot(payload, range_km, 'r-', 'LineWidth', 2);
+xlabel('Payload (kg)');
+ylabel('Range (km)');
+title('Range vs Payload for Pipistrel Alpha Electro');
+grid on;
