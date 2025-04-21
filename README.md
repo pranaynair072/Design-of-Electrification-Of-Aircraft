@@ -25,7 +25,7 @@ The simulation provides valuable insights into how electrification impacts fligh
 ### 🧠 Clone the Repository
 
 ```bash
-https://github.com/Muffintoodlehead/Design-of-Electrification-Of-Aircraft.git
+https://github.com/pranaynair072/MATLAB_Alpha-Electro.git
 ```
 
 ---
