@@ -1,4 +1,4 @@
-% MATLAB Script: Battery Cycle with Respect to Time for Pipistrel Alpha Electro by Pranay Nair, Pranav Nagrale and Mayur Kukreja
+% MATLAB Script: Battery Cycle with Respect to Time for Pipistrel Alpha Electro by Pranay Nair, Pranav Nagrale, Mayur Kukreja and Dhriti Ranjan
 
 clear all;
 close all;
