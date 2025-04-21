@@ -11,7 +11,7 @@ Requirements
 MATLAB (R2024b or later recommended)
 Basic MATLAB plotting and scripting knowledge
 🧠 Clone the Repository
-https://github.com/Muffintoodlehead/Design-of-Electrification-Of-Aircraft.git
+https://github.com/pranaynair072/MATLAB_Alpha-Electro
 ▶️ Run the Simulation
 Open MATLAB and navigate to the cloned directory.
 Run main_simulation.m — the central script to execute all computations.
