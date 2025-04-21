@@ -1,20 +1,46 @@
- License for MATLAB Code
+Proprietary License Agreement for Aircraft Electrification Scripts
+------------------------------------------------------------------
 
-Copyright © Pranay Nair,Mayur Kukreja and Pranav Nagrale 2025 (Maharashtra,India)
+Copyright (c) 2025
+Mayur A Kukreja, Pranay Prem Nair, Pranav Nagrale, Dhriti Ranjan
+Under the guidance of Dr. Swagata Paul and Dr. Saptarshi Mandal
+Amity University Mumbai
 
-This MATLAB code and any associated files are the intellectual property of the author and are provided for educational and personal use only.
+All rights reserved.
 
-Restrictions:
+This license applies only to all the contents but is not limited to:
 
-The code may not be used, copied, modified, distributed, reproduced, or incorporated into any commercial or professional work.
+- Core simulation scripts (e.g., aircraft_electrification_main.m, propulsion_model.m, powertrain_sizing.m)
+- Output results, charts, figures, and intermediate data files generated from proprietary algorithms.
 
-The code may not be published in any form (online or offline) or used in any academic or industrial research without explicit written permission from the author.
+Usage Terms:
+------------
 
-Any attempt to reverse-engineer, reuse, or repurpose this code for profit, professional gain, or publication is strictly prohibited.
+1. **Academic Use**  
+   You may use, modify, and reference the proprietary scripts for **non-commercial academic research and educational purposes only**.
 
+2. **No Redistribution**  
+   You may NOT redistribute, sublicense, publish, or otherwise make available the proprietary contents in any form, whether modified or unmodified, without explicit written permission from the authors.
 
-Disclaimer: This code is provided as is without any warranty. The author is not responsible for any loss or damage arising from its use.
+3. **No Commercial Use**  
+   You may NOT use the proprietary components of this repository for any commercial purposes, including but not limited to:
+   - Incorporation into commercial products or services
+   - Consulting or engineering services
+   - Paid workshops or training content
 
-By using or possessing this code, you agree to the terms of this license.
+4. **No Derivative Works for Distribution**  
+   You may modify the proprietary scripts for personal or academic purposes, but you may not distribute derived works publicly.
 
-For licensing inquiries or permission requests, contact: pranaynair72@gmail.com
+5. **Attribution Required**  
+   Any academic use must include appropriate citation of the original authors and affiliated institution.
+
+6. **Disclaimer of Warranty**  
+   The proprietary code is provided "as is", without warranty of any kind. The authors shall not be liable for any damages arising from its use.
+
+Request for Licensing:
+----------------------
+
+For partnerships, licensing requests, or commercial inquiries, please contact:
+
+- Email: mayurkukreja4321@gmail.com or pranaynair72@gmail.com
+
