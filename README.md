@@ -67,7 +67,7 @@ https://github.com/pranaynair072/Design-of-Electrification-Of-Aircraft.git
 - Range (km) vs Payload (kg) 
 - Max Flight Time (hr) vs Payload (kg)  
 - Battery Capacity (kWhr) vs Payload (kg)
-
+- Range (km) vs Time (hrs) 
  
 ---
 
